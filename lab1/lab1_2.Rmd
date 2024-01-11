@@ -61,7 +61,7 @@ Order of operations applies and you don't need to add an '=' sign.
 
 What is going on here? How do we adjust this expression so the output is 12?
 ```{r}
-4-2*6
+(4-2)*6
 ```
 
 
@@ -85,6 +85,38 @@ median(x)
 ```{r}
 sd(x)
 ```
+
+```{r}
+y <- c( 1,9, 5, 8, 0, 4, 8, 7)
+```
+
+```{r}
+mean(y)
+```
+
+```{r}
+median(y)
+```
+
+```{r}
+sd(y)
+```
+
+```{r}
+x+y
+```
+
+```{r}
+z <- 1
+```
+
+```{r}
+
+```
+
+
+
+
 
 ## RMarkdown  
 Annotation of code is important for programmers of all levels. When code is annotated, it is easy for others to understand and perhaps more importantly, easier for the person who wrote the code to understand when returning to a project days, months, or even years later. RMarkdown allows us to embed code in annotated chunks, show the results of analyses, and display graphical output all in one file. It is a great way of making a report which can be conveniently output to html or pdf.  
