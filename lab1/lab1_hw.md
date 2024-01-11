@@ -5,7 +5,7 @@ date: "2024-01-11"
 output:
   html_document: 
     theme: spacelab
-    keep_md: yes
+    keep_md: true
 ---
 
 ## Instructions
@@ -42,6 +42,8 @@ The difference between R and RStudio is that R is the scripting language which i
 
 **5. Did any of the results in #4 surprise you? Write two programs that calculate each expression such that the result for the first example is 4 and the second example is 16.**    
 
+The first example did surprise me a little bit because it didn't calculate using the correct order of operations. 
+
 
 ```r
 (5 - 3) * 2  
@@ -53,11 +55,11 @@ The difference between R and RStudio is that R is the scripting language which i
 
 
 ```r
-8 / 2 * 2 
+8 / (2 * 2) * 8
 ```
 
 ```
-## [1] 8
+## [1] 16
 ```
 
 **6. `Objects` in R are a way in which we can store data or operations. We will talk more about objects next week. For now, make a new object `pi` as 3.14159265359 by running the following code chunk. You should now see the object `pi` in the environment window in the top right.**  
@@ -81,6 +83,10 @@ pi * 2
 
 ```r
 ?mean
+```
+
+```
+## starting httpd help server ... done
 ```
 
 **9. Let's calculate the mean for the numbers 2, 8, 6, 4, 9, 10. I have built an object `x` for you below so all you need to do is run the first code chunk and then create a second code chunk that shows the calculation. Give it a try!**  
