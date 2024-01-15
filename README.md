@@ -2,7 +2,7 @@
 
 ## Welcome to my GitHub!
 
-[Carmen Doria](cmdoria@ucdavis.edu)
+[Carmen Doria](mailto:cmdoria@ucdavis.edu)
 
 My name is Carmen Doria. I am currently a senior majoring in Biotechnology with a concentration in bioinformatics.
 
