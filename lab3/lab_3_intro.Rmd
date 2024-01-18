@@ -1,0 +1,93 @@
+---
+title: "Lab 3 Intro"
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library("jpeg")
+```
+
+## Setup
+1. Go to iclicker.com and record your attendance.
+2. Login to the lab computer (please don't use your personal computer).  
+3. Navigate to github.com and login.  
+4. Find the class repository "datascibiol" (https://github.com/jmledford3115/datascibiol).  
+5. Download a copy the class repository to the desktop.  
+6. Clone your repository to the desktop.  
+7. Copy the files for today's lab from the class repository and paste them into **your** repository.  
+8. Open today's lab in RStudio.  
+
+## Review from last time
+### *With a partner, discuss the following questions*
+1. What are examples of different classes of objects in R?
+2. What is a vector? What is the command to make a vector in R?
+3. What is a data matrix and how does a data matrix relate to vectors?  
+
+## Warm-up
+1. Build a vector that includes the following height measurements for five plants:
+plant 1 30.7, plant 2 37.6, plant 3 28.4, plant 4 NA, plant 5 33.2
+2. Build another vector that includes the following mass measurements:
+plant 1 4, plant 2 5.2, plant 3 3.7, plant 4 NA, plant 5 4.6
+3. Assemble these vectors into a labeled data matrix with two columns
+4. Calculate the mean for height and mass and add them to the data matrix
+
+
+### 1. Plant Height Vector
+
+```{r}
+heights <- c(30.7, 37.6, 28.4, NA, 33.2)
+```
+
+
+
+### 2. Plant Weight Vector
+
+```{r}
+mass <- c(4, 5.2, 3.7, NA, 4.6)
+```
+
+### 3. Labels for data matrix
+
+```{r}
+plant_name <- c("Plant_1" , "Plant_2", "Plant_3", "Plant_4", "Plant_5")
+```
+
+```{r}
+measurement <- c("Height", "Mass")
+```
+
+
+### 4. Combine Data for Height and Weight
+```{r}
+plant_experiment <- c(plant_name, measurement)
+```
+
+### 5. Build Data Matrix
+```{r}
+plant_experiment_matrix <- matrix(plant_experiment, nrow = 5, byrow = F)
+plant_experiment_matrix
+```
+### 6. Name the Columns and Rows
+
+```{r}
+colnames(plant_experiment_matrix) <- measurement
+rownames(plant_experiment_matrix) <- 
+```
+
+
+### 7. Calculate the means of each column
+
+```{r}
+plant_means <- colMeans(plant_experiment_matrix, na.rm = T)
+plant_means
+```
+
+
+### 8. Add this as a new row
+```{r}
+plant_experiment_matrix_final <- rbind(plant_experiment_matrix, plant_means)
+plant_experiment_matrix_final
+```
+
