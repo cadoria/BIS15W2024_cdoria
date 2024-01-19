@@ -1,11 +1,11 @@
 ---
 title: "Lab 3 Homework"
-author: "Please Add Your Name Here"
+author: Carmen Doria
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
-    toc: no
+    keep_md: true
 ---
 
 ## Instructions
@@ -21,54 +21,92 @@ library(tidyverse)
 ### Mammals Sleep  
 1. For this assignment, we are going to use built-in data on mammal sleep patterns. From which publication are these data taken from? Since the data are built-in you can use the help function in R. The name of the data is `msleep`.  
 ```{r}
-
+msleep
 ```
 
 2. Store these data into a new data frame `sleep`.  
 ```{r}
-
+sleep <- msleep
 ```
 
 3. What are the dimensions of this data frame (variables and observations)? How do you know? Please show the *code* that you used to determine this below.  
-```{r}
 
+The data from msleep contains 83 rows and 11 columns.
+
+```{r}
+dim(sleep)
 ```
 
 4. Are there any NAs in the data? How did you determine this? Please show your code.  
-```{r}
 
+Yes, there are NAs in the data. 
+
+```{r}
+has_na <- any(is.na(sleep))
+has_na
 ```
 
 5. Show a list of the column names is this data frame.
-```{r}
 
+```{r}
+names(sleep)
 ```
 
-6. How many herbivores are represented in the data?  
-```{r}
+6. How many herbivores are represented in the data?
 
+32 herbivores are represented in the data. 
+
+```{r}
+is_herbi <- filter(sleep, vore == "herbi")
+is_herbi
 ```
 
 7. We are interested in two groups; small and large mammals. Let's define small as less than or equal to 19kg body weight and large as greater than or equal to 200kg body weight. Make two new dataframes (large and small) based on these parameters.
 ```{r}
+small_mammals <-  data.frame(sleep[sleep$bodywt <= 19, ])
+small_mammals
+```
 
+```{r}
+large_mammals <-  data.frame(sleep[sleep$bodywt >= 200, ])
+large_mammals
 ```
 
 8. What is the mean weight for both the small and large mammals?
-```{r}
 
+The mean weight for the small mammals is 1.79 and for the large mammanls it's 1747.07.
+```{r}
+small_mean <- mean(small_mammals$bodywt, na.rm = T)
+mean(small_mean)
 ```
 
 ```{r}
-
+large_mean <- mean(large_mammals$bodywt, na.rm = T)
+mean(large_mean)
 ```
 
 9. Using a similar approach as above, do large or small animals sleep longer on average?  
 
+It appears that small animals sleep longer on average. 
+
+```{r}
+large_mean_sleep <- mean(large_mammals$sleep_total, na.rm = TRUE)
+large_mean_sleep
+```
+
+```{r}
+small_mean_sleep <- mean(small_mammals$sleep_total, na.rm = TRUE)
+small_mean_sleep
+```
 
 
 10. Which animal is the sleepiest among the entire dataframe?
 
+It appears that the sleepiest animal is the little brown bat with a sleep total of 19.9.
+```{r}
+sleepiest_animal <-filter(sleep, sleep_total > 19)
+sleepiest_animal
+```
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   
