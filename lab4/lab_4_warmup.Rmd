@@ -1,0 +1,56 @@
+---
+title: "lab_4_warmup"
+output: html_document
+date: "2024-01-23"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Load the libraries
+```{r}
+library(tidyverse)
+```
+```{r}
+library(palmerpenguins)
+```
+
+
+## 2. 
+```{r}
+palmer_penguins <- penguins
+palmer_penguins
+```
+## 2. What are the dimensions of the dataset `penguins`?
+The dimensions of the dataset: 344 x 8
+```{r}
+dim(palmer_penguins)
+```
+
+## 3. What are the names of the variables in the `penguins` dataset?
+
+```{r}
+names(palmer_penguins)
+```
+
+```{r}
+glimpse(penguins)
+```
+
+## 4. How many individuals were sampled on each island in the `penguins` dataset?
+
+```{r}
+table(palmer_penguins$island)
+
+```
+
+```{r}
+summary(palmer_penguins$island)
+```
+
+## 5. What is the mean body mass for all individuals in the `penguins` dataset?
+```{r}
+mean(palmer_penguins$body_mass_g, na.rm = T)
+```
+
