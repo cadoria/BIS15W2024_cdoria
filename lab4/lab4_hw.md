@@ -304,29 +304,22 @@ count(homerange, taxon)
 ```
 
 **6. The species in `homerange` are also classified into trophic guilds. How many species are represented in each trophic guild.** 
-There are 13 species repsresented. 7 species are carnivores, and 6 are herbivores. 
+There are 13 species repsresented. 7 species are carnivores, and 6 are herbivores. In the carnivores there are 342 and 227 in the herbivores. 
+
 
 ```r
-count(homerange, taxon, trophic.guild)
+filtered_species <- homerange %>%
+  filter(trophic.guild %in% c("carnivore", "herbivore")) %>%
+  count(trophic.guild)
+filtered_species
 ```
 
 ```
-## # A tibble: 13 × 3
-##    taxon         trophic.guild     n
-##    <fct>         <chr>         <int>
-##  1 birds         carnivore       116
-##  2 birds         herbivore        24
-##  3 lake fishes   carnivore         9
-##  4 lizards       herbivore        11
-##  5 mammals       carnivore        80
-##  6 mammals       herbivore       158
-##  7 marine fishes carnivore        70
-##  8 marine fishes herbivore        20
-##  9 river fishes  carnivore        14
-## 10 snakes        carnivore        41
-## 11 tortoises     herbivore        12
-## 12 turtles       carnivore        12
-## 13 turtles       herbivore         2
+## # A tibble: 2 × 2
+##   trophic.guild     n
+##   <chr>         <int>
+## 1 carnivore       342
+## 2 herbivore       227
 ```
 
 

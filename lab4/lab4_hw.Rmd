@@ -84,8 +84,6 @@ levels(homerange$order)
 Checking to see if the code worked
 ```{r}
 class(homerange$taxon)
-```
-```{r}
 class(homerange$order)
 ```
 
@@ -102,9 +100,13 @@ count(homerange, taxon)
 ```
 
 **6. The species in `homerange` are also classified into trophic guilds. How many species are represented in each trophic guild.** 
-There are 13 species repsresented. 7 species are carnivores, and 6 are herbivores. 
+There are 13 species repsresented. 7 species are carnivores, and 6 are herbivores. In the carnivores there are 342 and 227 in the herbivores. 
+
 ```{r}
-count(homerange, taxon, trophic.guild)
+filtered_species <- homerange %>%
+  filter(trophic.guild %in% c("carnivore", "herbivore")) %>%
+  count(trophic.guild)
+filtered_species
 ```
 
 

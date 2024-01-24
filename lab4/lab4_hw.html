@@ -593,24 +593,17 @@ table the shows the counts for each of these
 <p><strong>6. The species in <code>homerange</code> are also classified
 into trophic guilds. How many species are represented in each trophic
 guild.</strong> There are 13 species repsresented. 7 species are
-carnivores, and 6 are herbivores.</p>
-<pre class="r"><code>count(homerange, taxon, trophic.guild)</code></pre>
-<pre><code>## # A tibble: 13 × 3
-##    taxon         trophic.guild     n
-##    &lt;fct&gt;         &lt;chr&gt;         &lt;int&gt;
-##  1 birds         carnivore       116
-##  2 birds         herbivore        24
-##  3 lake fishes   carnivore         9
-##  4 lizards       herbivore        11
-##  5 mammals       carnivore        80
-##  6 mammals       herbivore       158
-##  7 marine fishes carnivore        70
-##  8 marine fishes herbivore        20
-##  9 river fishes  carnivore        14
-## 10 snakes        carnivore        41
-## 11 tortoises     herbivore        12
-## 12 turtles       carnivore        12
-## 13 turtles       herbivore         2</code></pre>
+carnivores, and 6 are herbivores. In the carnivores there are 342 and
+227 in the herbivores.</p>
+<pre class="r"><code>filtered_species &lt;- homerange %&gt;%
+  filter(trophic.guild %in% c(&quot;carnivore&quot;, &quot;herbivore&quot;)) %&gt;%
+  count(trophic.guild)
+filtered_species</code></pre>
+<pre><code>## # A tibble: 2 × 2
+##   trophic.guild     n
+##   &lt;chr&gt;         &lt;int&gt;
+## 1 carnivore       342
+## 2 herbivore       227</code></pre>
 </div>
 <div id="finish-1-6" class="section level2">
 <h2>Finish 1-6</h2>
