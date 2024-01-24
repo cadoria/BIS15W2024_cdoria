@@ -64,7 +64,7 @@ class(homerange)
 
 **3. Change the class of the variables `taxon` and `order` to factors and display their levels.** 
 
-## Setting the class of variables to factors 
+Setting the class of variables to factors 
 ```{r}
 homerange$taxon <- factor(homerange$taxon)
 ```
@@ -73,14 +73,15 @@ homerange$taxon <- factor(homerange$taxon)
 homerange$order <- factor(homerange$order)
 ```
 
-## Displaying levels
+Displaying levels
 ```{r}
 levels(homerange$taxon)
 ```
 ```{r}
 levels(homerange$order)
 ```
-## Checking to see if the code worked
+
+Checking to see if the code worked
 ```{r}
 class(homerange$taxon)
 ```
