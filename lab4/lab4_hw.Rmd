@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output:
   html_document: 
     theme: spacelab
-    keep_md: true
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -44,6 +44,8 @@ homerange <- read_csv("data/Tamburelloetal_HomeRangeDatabase.csv")
 ```{r}
 dim(homerange)
 ```
+
+
 ```{r}
 names(homerange)
 ```
@@ -77,6 +79,8 @@ Displaying levels
 ```{r}
 levels(homerange$taxon)
 ```
+
+
 ```{r}
 levels(homerange$order)
 ```
@@ -115,21 +119,37 @@ filtered_species
 
 **7. Make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.**  
 ```{r}
+only_carnivores <- filter(homerange, trophic.guild =="carnivore")
+only_carnivores
+```
 
+```{r}
+only_herbivores <- filter(homerange, trophic.guild =="herbivore")
+only_herbivores
 ```
 
 **8. Do herbivores or carnivores have, on average, a larger `mean.hra.m2`? Remove any NAs from the data.**  
 ```{r}
-
+mean(only_carnivores$"mean.hra.m2", na.rm = T)
 ```
 
 ```{r}
+mean(only_herbivores$"mean.hra.m2", na.rm = T)
 
 ```
 
 **9. Make a new dataframe `owls` that is limited to the mean mass, log10 mass, family, genus, and species of owls in the database. Which is the smallest owl? What is its common name? Do a little bit of searching online to see what you can learn about this species and provide a link below** 
 ```{r}
+names(homerange)
+```
+```{r}
+owls <- filter(homerange, )
+```
 
+
+```{r}
+homerange_subset <- select(homerange, "mean.mass.g", "log10.mass", "family", "genus", "species")
+homerange_subset
 ```
 
 **10. As measured by the data, which bird species has the largest homerange? Show all of your work, please. Look this species up online and tell me about it!**.  

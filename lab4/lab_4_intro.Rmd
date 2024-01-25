@@ -31,3 +31,5 @@ library("jpeg")
 3. What are the names of the variables in the `penguins` dataset?
 4. How many individuals were sampled on each island in the `penguins` dataset?
 5. What is the mean body mass for all individuals in the `penguins` dataset?
+
+Select allows us to pull out columns. Filters filters out specific value rather then varibles themselves. 

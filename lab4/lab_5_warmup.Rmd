@@ -1,0 +1,53 @@
+---
+title: "lab_5_warmup"
+output: html_document
+date: "2024-01-25"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+getwd()
+```
+Load the tideverse package
+```{r}
+library("tidyverse")
+```
+
+## 1. Load the fish data
+```{r}
+fish_data <- read_csv("data/Gaeta_etal_CLC_data.csv")
+```
+## 2. Transform fish data to only include the variables lakeid and length
+```{r}
+fish_length <- select(fish_data, "lakeid", "length")
+## select pulls out columns
+```
+
+## 3. Filter the fish data to include samples from lake "BO"
+```{r}
+glimpse(fish_data)
+```
+
+```{r}
+only_bo <- filter(fish_data, lakeid == "BO")
+only_bo
+```
+
+## 4. Calculate the mean length from lake BO
+```{r}
+mean(only_bo$length)
+```
+
+## Example from class
+```{r}
+fish_bo <- filter(fish_data, lakeid == "BO")
+## filter looks within the observations and pulls out the conditions that match the observations
+```
+
+```{r}
+mean(fish_bo$length)
+```
+
