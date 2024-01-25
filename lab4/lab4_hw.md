@@ -1,7 +1,7 @@
 ---
 title: "Lab 4 Homework"
 author: Carmen Doria
-date: "2024-01-23"
+date: "2024-01-25"
 output:
   html_document: 
     theme: spacelab
@@ -61,6 +61,8 @@ dim(homerange)
 ```
 ## [1] 569  24
 ```
+
+
 
 ```r
 names(homerange)
@@ -215,6 +217,8 @@ levels(homerange$taxon)
 ## [9] "turtles"
 ```
 
+
+
 ```r
 levels(homerange$order)
 ```
@@ -328,17 +332,191 @@ filtered_species
 
 **7. Make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.**  
 
+```r
+only_carnivores <- filter(homerange, trophic.guild =="carnivore")
+only_carnivores
+```
 
-**8. Do herbivores or carnivores have, on average, a larger `mean.hra.m2`? Remove any NAs from the data.**  
+```
+## # A tibble: 342 × 24
+##    taxon        common.name class order family genus species primarymethod N    
+##    <fct>        <chr>       <chr> <fct> <chr>  <chr> <chr>   <chr>         <chr>
+##  1 lake fishes  american e… acti… angu… angui… angu… rostra… telemetry     16   
+##  2 river fishes blacktail … acti… cypr… catos… moxo… poecil… mark-recaptu… <NA> 
+##  3 river fishes central st… acti… cypr… cypri… camp… anomal… mark-recaptu… 20   
+##  4 river fishes rosyside d… acti… cypr… cypri… clin… fundul… mark-recaptu… 26   
+##  5 river fishes longnose d… acti… cypr… cypri… rhin… catara… mark-recaptu… 17   
+##  6 river fishes muskellunge acti… esoc… esoci… esox  masqui… telemetry     5    
+##  7 marine fish… pollack     acti… gadi… gadid… poll… pollac… telemetry     2    
+##  8 marine fish… saithe      acti… gadi… gadid… poll… virens  telemetry     2    
+##  9 marine fish… giant trev… acti… perc… caran… cara… ignobi… telemetry     4    
+## 10 lake fishes  rock bass   acti… perc… centr… ambl… rupest… mark-recaptu… 16   
+## # ℹ 332 more rows
+## # ℹ 15 more variables: mean.mass.g <dbl>, log10.mass <dbl>,
+## #   alternative.mass.reference <chr>, mean.hra.m2 <dbl>, log10.hra <dbl>,
+## #   hra.reference <chr>, realm <chr>, thermoregulation <chr>, locomotion <chr>,
+## #   trophic.guild <chr>, dimension <dbl>, preymass <dbl>, log10.preymass <dbl>,
+## #   PPMR <dbl>, prey.size.reference <chr>
+```
 
 
+```r
+only_herbivores <- filter(homerange, trophic.guild =="herbivore")
+only_herbivores
+```
 
+```
+## # A tibble: 227 × 24
+##    taxon        common.name class order family genus species primarymethod N    
+##    <fct>        <chr>       <chr> <fct> <chr>  <chr> <chr>   <chr>         <chr>
+##  1 marine fish… lined surg… acti… perc… acant… acan… lineat… direct obser… <NA> 
+##  2 marine fish… orangespin… acti… perc… acant… naso  litura… telemetry     8    
+##  3 marine fish… bluespine … acti… perc… acant… naso  unicor… telemetry     7    
+##  4 marine fish… redlip ble… acti… perc… blenn… ophi… atlant… direct obser… 20   
+##  5 marine fish… bermuda ch… acti… perc… kypho… kyph… sectat… telemetry     11   
+##  6 marine fish… cherubfish  acti… perc… pomac… cent… argi    direct obser… <NA> 
+##  7 marine fish… damselfish  acti… perc… pomac… chro… chromis direct obser… <NA> 
+##  8 marine fish… twinspot d… acti… perc… pomac… chry… biocel… direct obser… 18   
+##  9 marine fish… wards dams… acti… perc… pomac… poma… wardi   direct obser… <NA> 
+## 10 marine fish… australian… acti… perc… pomac… steg… apical… direct obser… <NA> 
+## # ℹ 217 more rows
+## # ℹ 15 more variables: mean.mass.g <dbl>, log10.mass <dbl>,
+## #   alternative.mass.reference <chr>, mean.hra.m2 <dbl>, log10.hra <dbl>,
+## #   hra.reference <chr>, realm <chr>, thermoregulation <chr>, locomotion <chr>,
+## #   trophic.guild <chr>, dimension <dbl>, preymass <dbl>, log10.preymass <dbl>,
+## #   PPMR <dbl>, prey.size.reference <chr>
+```
+
+**8. Do herbivores or carnivores have, on average, a larger `mean.hra.m2`? Remove any NAs from the data.** 
+On average it appears that carnivores have a larger `mean.hra.m2`.
+
+
+```r
+carnivores_mean <- table(only_carnivores$mean.hra.m2)
+mean(carnivores_mean, na.rm = T)
+```
+
+```
+## [1] 1.062112
+```
+
+
+```r
+herbivores_mean <- table(only_herbivores$mean.hra.m2)
+mean(herbivores_mean, na.rm = T)
+```
+
+```
+## [1] 1.008889
+```
 
 **9. Make a new dataframe `owls` that is limited to the mean mass, log10 mass, family, genus, and species of owls in the database. Which is the smallest owl? What is its common name? Do a little bit of searching online to see what you can learn about this species and provide a link below** 
 
+The smallest owl was the glaucidium	passerinum which is the Eurasian pygmy owl. More info on the Eurasian pygmy owl [here.](https://animaldiversity.org/accounts/Glaucidium_passerinum/)
 
-**10. As measured by the data, which bird species has the largest homerange? Show all of your work, please. Look this species up online and tell me about it!**.  
 
+Make a different dataframe that selects for mean mass, log10 mass, family, genus, and species 
+
+```r
+owl_subset <- select(homerange, "mean.mass.g", "log10.mass", "family", "genus", "species")
+owl_subset
+```
+
+```
+## # A tibble: 569 × 5
+##    mean.mass.g log10.mass family       genus       species    
+##          <dbl>      <dbl> <chr>        <chr>       <chr>      
+##  1        887       2.95  anguillidae  anguilla    rostrata   
+##  2        562       2.75  catostomidae moxostoma   poecilura  
+##  3         34       1.53  cyprinidae   campostoma  anomalum   
+##  4          4       0.602 cyprinidae   clinostomus funduloides
+##  5          4       0.602 cyprinidae   rhinichthys cataractae 
+##  6       3525       3.55  esocidae     esox        masquinongy
+##  7        737.      2.87  gadidae      pollachius  pollachius 
+##  8        449.      2.65  gadidae      pollachius  virens     
+##  9        109.      2.04  acanthuridae acanthurus  lineatus   
+## 10        772.      2.89  acanthuridae naso        lituratus  
+## # ℹ 559 more rows
+```
+
+Now make the owl dataframe
+
+```r
+owls <- filter(owl_subset, family == "strigidae")
+owls
+```
+
+```
+## # A tibble: 8 × 5
+##   mean.mass.g log10.mass family    genus      species    
+##         <dbl>      <dbl> <chr>     <chr>      <chr>      
+## 1       119         2.08 strigidae aegolius   funereus   
+## 2       252         2.40 strigidae asio       otus       
+## 3       156.        2.19 strigidae athene     noctua     
+## 4      2191         3.34 strigidae bubo       bubo       
+## 5      1510         3.18 strigidae bubo       virginianus
+## 6        61.3       1.79 strigidae glaucidium passerinum 
+## 7      1920         3.28 strigidae nyctea     scandiaca  
+## 8       519         2.72 strigidae strix      aluco
+```
+
+find smallest owl
+
+```r
+sorted_owls <- arrange(owls, mean.mass.g)
+sorted_owls
+```
+
+```
+## # A tibble: 8 × 5
+##   mean.mass.g log10.mass family    genus      species    
+##         <dbl>      <dbl> <chr>     <chr>      <chr>      
+## 1        61.3       1.79 strigidae glaucidium passerinum 
+## 2       119         2.08 strigidae aegolius   funereus   
+## 3       156.        2.19 strigidae athene     noctua     
+## 4       252         2.40 strigidae asio       otus       
+## 5       519         2.72 strigidae strix      aluco      
+## 6      1510         3.18 strigidae bubo       virginianus
+## 7      1920         3.28 strigidae nyctea     scandiaca  
+## 8      2191         3.34 strigidae bubo       bubo
+```
+
+
+**10. As measured by the data, which bird species has the largest homerange? Show all of your work, please. Look this species up online and tell me about it!**. 
+
+The bird with the largest homerange is the carcara cheriway or the Northern crested caracara. 
+
+```r
+birds <- filter(homerange, taxon == "birds")
+```
+
+
+
+```r
+bird_subset <- select(birds, genus, species, mean.mass.g, log10.mass, mean.hra.m2, log10.hra)
+```
+
+
+```r
+arrange(bird_subset, desc(mean.hra.m2))
+```
+
+```
+## # A tibble: 140 × 6
+##    genus        species      mean.mass.g log10.mass mean.hra.m2 log10.hra
+##    <chr>        <chr>              <dbl>      <dbl>       <dbl>     <dbl>
+##  1 caracara     cheriway           1125        3.05   241000000      8.38
+##  2 circus       pygargus            316.       2.50   200980000      8.30
+##  3 falco        peregrinus          782.       2.89   153860000      8.19
+##  4 hieraaetus   pennatus            975        2.99   117300000      8.07
+##  5 struthio     camelus           88250        4.95    84300000      7.93
+##  6 circaetus    gallicus           1699        3.23    78500000      7.89
+##  7 streptopelia turtur              140.       2.15    63585000      7.80
+##  8 neophron     percnopterus       2203        3.34    63570000      7.80
+##  9 buteo        buteo               846        2.93    50240000      7.70
+## 10 falco        biarmicus           675        2.83    50000000      7.70
+## # ℹ 130 more rows
+```
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   
