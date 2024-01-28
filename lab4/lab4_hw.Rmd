@@ -168,7 +168,8 @@ sorted_owls
 
 **10. As measured by the data, which bird species has the largest homerange? Show all of your work, please. Look this species up online and tell me about it!**. 
 
-The bird with the largest homerange is the carcara cheriway or the Northern crested caracara. 
+The bird with the largest homerange is the carcara cheriway or the Northern crested caracara. It is a bird of prey found in the family Falconidae. 
+
 ```{r}
 birds <- filter(homerange, taxon == "birds")
 ```
