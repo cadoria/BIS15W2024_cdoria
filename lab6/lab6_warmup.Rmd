@@ -1,0 +1,104 @@
+---
+title: "lab_6_warmup"
+output: html_document
+date: "2024-01-30"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load the Library
+
+```{r}
+library("tidyverse")
+```
+
+
+```{r}
+library("janitor")
+```
+
+
+## Load the bison data
+```{r}
+bison <- read_csv("data/bison.csv")
+```
+## What are the dimensions and structure of the data?
+```{r}
+dim(bison)
+```
+
+```{r}
+glimpse(bison)
+```
+
+## We are only interested in code, sex, weight, year of birth
+```{r}
+names(bison)
+```
+
+## Restrict tthe data to these variables and store as a new object
+```{r}
+bison_subset <- select(bison, "data_code", "animal_sex", "animal_weight", "animal_yob")
+bison_subset
+```
+```{r}
+#using pipes
+#bison_new <- bison %>%
+#  select(animal_code, animal_sex. animal_weight, animal_yob)
+```
+
+## Pull out the animals born between 1980-1990
+```{r}
+bison_year <- filter(bison_subset, animal_yob <= 1990 & animal_yob >= 1980)
+bison_year
+#could also use between
+```
+```{r}
+#bison_new %>%
+  #filter(animal_yob>= 1980 & animal_yob<= 1990)
+```
+
+
+## How many male and female bison are represented between 1980-1990?
+There are 21 male bison represented and 414 female bison represented. 
+```{r}
+male_bison <- filter(bison_year, animal_sex == "M")
+male_bison
+```
+```{r}
+female_bison <- filter(bison_year, animal_sex == "F")
+female_bison
+```
+```{r}
+## class way
+#males <- bison_new %>%
+ # filter(animal_yob>= 1980 & animal_yob<= 1990) %>%
+  #filter(animal_sex == "M")
+#males
+
+#table(males$animal_sex)
+```
+
+```{r}
+## class way
+#females <- bison_new %>%
+  #filter(animal_yob>= 1980 & animal_yob<= 1990) %>%
+  #filter(animal_sex == "M")
+#females
+
+#table(females$animal_sex)
+```
+
+## Between 1980-1990, were males or females larger on average?
+
+On average it appears that the male bison were larger. 
+```{r}
+mean(male_bison$animal_weight)
+```
+
+```{r}
+mean(female_bison$animal_weight)
+```
+
