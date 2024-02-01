@@ -213,29 +213,24 @@ superhero_info %>%
 
 ```r
 superhero_info %>%
-  select(name, alignment, race) %>%
-  filter(is.na(race) | tolower(race) %in% c("human"))
+  select(name, alignment, race)
 ```
 
 ```
-## # A tibble: 512 × 3
-##    name          alignment race 
-##    <chr>         <chr>     <chr>
-##  1 A-Bomb        good      Human
-##  2 Absorbing Man bad       Human
-##  3 Adam Monroe   good      <NA> 
-##  4 Adam Strange  good      Human
-##  5 Agent 13      good      <NA> 
-##  6 Agent Bob     good      Human
-##  7 Agent Zero    good      <NA> 
-##  8 Air-Walker    bad       <NA> 
-##  9 Alan Scott    good      <NA> 
-## 10 Alex Mercer   bad       Human
-## # ℹ 502 more rows
-```
-
-```r
-#not counting hybrids as human 
+## # A tibble: 734 × 3
+##    name          alignment race             
+##    <chr>         <chr>     <chr>            
+##  1 A-Bomb        good      Human            
+##  2 Abe Sapien    good      Icthyo Sapien    
+##  3 Abin Sur      good      Ungaran          
+##  4 Abomination   bad       Human / Radiation
+##  5 Abraxas       bad       Cosmic Entity    
+##  6 Absorbing Man bad       Human            
+##  7 Adam Monroe   good      <NA>             
+##  8 Adam Strange  good      Human            
+##  9 Agent 13      good      <NA>             
+## 10 Agent Bob     good      Human            
+## # ℹ 724 more rows
 ```
 
 
@@ -245,24 +240,28 @@ superhero_info %>%
 ```r
 superhero_info %>%
   select(name, alignment, race) %>%
-  filter(!(tolower(race) %in% c("human")) | is.na(race))
+  filter(race != "Human")
 ```
 
 ```
-## # A tibble: 526 × 3
-##    name        alignment race             
-##    <chr>       <chr>     <chr>            
-##  1 Abe Sapien  good      Icthyo Sapien    
-##  2 Abin Sur    good      Ungaran          
-##  3 Abomination bad       Human / Radiation
-##  4 Abraxas     bad       Cosmic Entity    
-##  5 Adam Monroe good      <NA>             
-##  6 Agent 13    good      <NA>             
-##  7 Agent Zero  good      <NA>             
-##  8 Air-Walker  bad       <NA>             
-##  9 Ajax        bad       Cyborg           
-## 10 Alan Scott  good      <NA>             
-## # ℹ 516 more rows
+## # A tibble: 222 × 3
+##    name         alignment race             
+##    <chr>        <chr>     <chr>            
+##  1 Abe Sapien   good      Icthyo Sapien    
+##  2 Abin Sur     good      Ungaran          
+##  3 Abomination  bad       Human / Radiation
+##  4 Abraxas      bad       Cosmic Entity    
+##  5 Ajax         bad       Cyborg           
+##  6 Alien        bad       Xenomorph XX121  
+##  7 Amazo        bad       Android          
+##  8 Angel        good      Vampire          
+##  9 Angel Dust   good      Mutant           
+## 10 Anti-Monitor bad       God / Eternal    
+## # ℹ 212 more rows
+```
+
+```r
+#human hybrids are counted as not humans 
 ```
 
 

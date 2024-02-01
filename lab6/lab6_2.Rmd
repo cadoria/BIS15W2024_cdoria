@@ -88,9 +88,8 @@ superhero_info %>%
 3. Let's say we are only interested in the variables name, alignment, and "race". How would you isolate these variables from `superhero_info`?
 ```{r}
 superhero_info %>%
-  select(name, alignment, race) %>%
-  filter(is.na(race) | tolower(race) %in% c("human"))
-#not counting hybrids as human 
+  select(name, alignment, race)
+
 ```
 
 
@@ -99,8 +98,8 @@ superhero_info %>%
 ```{r}
 superhero_info %>%
   select(name, alignment, race) %>%
-  filter(!(tolower(race) %in% c("human")) | is.na(race))
-
+  filter(race != "Human")
+#human hybrids are counted as not humans 
 ```
 
 

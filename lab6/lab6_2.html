@@ -1673,23 +1673,21 @@ and “race”. How would you isolate these variables from
 <code>superhero_info</code>?</li>
 </ol>
 <pre class="r"><code>superhero_info %&gt;%
-  select(name, alignment, race) %&gt;%
-  filter(is.na(race) | tolower(race) %in% c(&quot;human&quot;))</code></pre>
-<pre><code>## # A tibble: 512 × 3
-##    name          alignment race 
-##    &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;
-##  1 A-Bomb        good      Human
-##  2 Absorbing Man bad       Human
-##  3 Adam Monroe   good      &lt;NA&gt; 
-##  4 Adam Strange  good      Human
-##  5 Agent 13      good      &lt;NA&gt; 
-##  6 Agent Bob     good      Human
-##  7 Agent Zero    good      &lt;NA&gt; 
-##  8 Air-Walker    bad       &lt;NA&gt; 
-##  9 Alan Scott    good      &lt;NA&gt; 
-## 10 Alex Mercer   bad       Human
-## # ℹ 502 more rows</code></pre>
-<pre class="r"><code>#not counting hybrids as human </code></pre>
+  select(name, alignment, race)</code></pre>
+<pre><code>## # A tibble: 734 × 3
+##    name          alignment race             
+##    &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;            
+##  1 A-Bomb        good      Human            
+##  2 Abe Sapien    good      Icthyo Sapien    
+##  3 Abin Sur      good      Ungaran          
+##  4 Abomination   bad       Human / Radiation
+##  5 Abraxas       bad       Cosmic Entity    
+##  6 Absorbing Man bad       Human            
+##  7 Adam Monroe   good      &lt;NA&gt;             
+##  8 Adam Strange  good      Human            
+##  9 Agent 13      good      &lt;NA&gt;             
+## 10 Agent Bob     good      Human            
+## # ℹ 724 more rows</code></pre>
 </div>
 <div id="not-human" class="section level2">
 <h2>Not Human</h2>
@@ -1698,21 +1696,22 @@ and “race”. How would you isolate these variables from
 </ol>
 <pre class="r"><code>superhero_info %&gt;%
   select(name, alignment, race) %&gt;%
-  filter(!(tolower(race) %in% c(&quot;human&quot;)) | is.na(race))</code></pre>
-<pre><code>## # A tibble: 526 × 3
-##    name        alignment race             
-##    &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;            
-##  1 Abe Sapien  good      Icthyo Sapien    
-##  2 Abin Sur    good      Ungaran          
-##  3 Abomination bad       Human / Radiation
-##  4 Abraxas     bad       Cosmic Entity    
-##  5 Adam Monroe good      &lt;NA&gt;             
-##  6 Agent 13    good      &lt;NA&gt;             
-##  7 Agent Zero  good      &lt;NA&gt;             
-##  8 Air-Walker  bad       &lt;NA&gt;             
-##  9 Ajax        bad       Cyborg           
-## 10 Alan Scott  good      &lt;NA&gt;             
-## # ℹ 516 more rows</code></pre>
+  filter(race != &quot;Human&quot;)</code></pre>
+<pre><code>## # A tibble: 222 × 3
+##    name         alignment race             
+##    &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;            
+##  1 Abe Sapien   good      Icthyo Sapien    
+##  2 Abin Sur     good      Ungaran          
+##  3 Abomination  bad       Human / Radiation
+##  4 Abraxas      bad       Cosmic Entity    
+##  5 Ajax         bad       Cyborg           
+##  6 Alien        bad       Xenomorph XX121  
+##  7 Amazo        bad       Android          
+##  8 Angel        good      Vampire          
+##  9 Angel Dust   good      Mutant           
+## 10 Anti-Monitor bad       God / Eternal    
+## # ℹ 212 more rows</code></pre>
+<pre class="r"><code>#human hybrids are counted as not humans </code></pre>
 </div>
 <div id="good-and-evil" class="section level2">
 <h2>Good and Evil</h2>
