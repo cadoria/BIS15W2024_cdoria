@@ -2103,18 +2103,17 @@ stamina?</p>
 ## [165] &quot;molecular_dissipation&quot;        &quot;vision_cryo&quot;                 
 ## [167] &quot;omnipresent&quot;                  &quot;omniscient&quot;</code></pre>
 <pre class="r"><code>superhero_powers %&gt;%
-  filter(hero_names == &quot;Deadpool&quot;)</code></pre>
-<pre><code>## # A tibble: 1 × 168
-##   hero_names agility accelerated_healing lantern_power_ring
-##   &lt;chr&gt;      &lt;lgl&gt;   &lt;lgl&gt;               &lt;lgl&gt;             
-## 1 Deadpool   TRUE    TRUE                FALSE             
-## # ℹ 164 more variables: dimensional_awareness &lt;lgl&gt;, cold_resistance &lt;lgl&gt;,
-## #   durability &lt;lgl&gt;, stealth &lt;lgl&gt;, energy_absorption &lt;lgl&gt;, flight &lt;lgl&gt;,
-## #   danger_sense &lt;lgl&gt;, underwater_breathing &lt;lgl&gt;, marksmanship &lt;lgl&gt;,
-## #   weapons_master &lt;lgl&gt;, power_augmentation &lt;lgl&gt;, animal_attributes &lt;lgl&gt;,
-## #   longevity &lt;lgl&gt;, intelligence &lt;lgl&gt;, super_strength &lt;lgl&gt;,
-## #   cryokinesis &lt;lgl&gt;, telepathy &lt;lgl&gt;, energy_armor &lt;lgl&gt;,
-## #   energy_blasts &lt;lgl&gt;, duplication &lt;lgl&gt;, size_changing &lt;lgl&gt;, …</code></pre>
+  filter(hero_names == &quot;Deadpool&quot;) %&gt;% 
+  select_if(all)</code></pre>
+<pre><code>## Warning in .p(column, ...): coercing argument of type &#39;character&#39; to logical</code></pre>
+<pre><code>## # A tibble: 1 × 16
+##   agility accelerated_healing dimensional_awareness stealth marksmanship
+##   &lt;lgl&gt;   &lt;lgl&gt;               &lt;lgl&gt;                 &lt;lgl&gt;   &lt;lgl&gt;       
+## 1 TRUE    TRUE                TRUE                  TRUE    TRUE        
+## # ℹ 11 more variables: weapons_master &lt;lgl&gt;, longevity &lt;lgl&gt;, stamina &lt;lgl&gt;,
+## #   weapon_based_powers &lt;lgl&gt;, teleportation &lt;lgl&gt;, immortality &lt;lgl&gt;,
+## #   reflexes &lt;lgl&gt;, regeneration &lt;lgl&gt;, toxin_and_disease_resistance &lt;lgl&gt;,
+## #   telepathy_resistance &lt;lgl&gt;, mind_control_resistance &lt;lgl&gt;</code></pre>
 <ol start="15" style="list-style-type: decimal">
 <li>Can you find your hero in the superhero_info data? Show their
 info!</li>

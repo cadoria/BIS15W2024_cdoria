@@ -426,6 +426,7 @@ good_guys %>%
 ## # ℹ 1 more variable: weight <dbl>
 ```
 
+
 ```r
 bad_guys %>% 
   filter(hair_color == "Green")
@@ -734,21 +735,23 @@ names(superhero_powers)
 
 ```r
 superhero_powers %>%
-  filter(hero_names == "Deadpool")
+  filter(hero_names == "Deadpool") %>% 
+  select_if(all)
 ```
 
 ```
-## # A tibble: 1 × 168
-##   hero_names agility accelerated_healing lantern_power_ring
-##   <chr>      <lgl>   <lgl>               <lgl>             
-## 1 Deadpool   TRUE    TRUE                FALSE             
-## # ℹ 164 more variables: dimensional_awareness <lgl>, cold_resistance <lgl>,
-## #   durability <lgl>, stealth <lgl>, energy_absorption <lgl>, flight <lgl>,
-## #   danger_sense <lgl>, underwater_breathing <lgl>, marksmanship <lgl>,
-## #   weapons_master <lgl>, power_augmentation <lgl>, animal_attributes <lgl>,
-## #   longevity <lgl>, intelligence <lgl>, super_strength <lgl>,
-## #   cryokinesis <lgl>, telepathy <lgl>, energy_armor <lgl>,
-## #   energy_blasts <lgl>, duplication <lgl>, size_changing <lgl>, …
+## Warning in .p(column, ...): coercing argument of type 'character' to logical
+```
+
+```
+## # A tibble: 1 × 16
+##   agility accelerated_healing dimensional_awareness stealth marksmanship
+##   <lgl>   <lgl>               <lgl>                 <lgl>   <lgl>       
+## 1 TRUE    TRUE                TRUE                  TRUE    TRUE        
+## # ℹ 11 more variables: weapons_master <lgl>, longevity <lgl>, stamina <lgl>,
+## #   weapon_based_powers <lgl>, teleportation <lgl>, immortality <lgl>,
+## #   reflexes <lgl>, regeneration <lgl>, toxin_and_disease_resistance <lgl>,
+## #   telepathy_resistance <lgl>, mind_control_resistance <lgl>
 ```
 
 15. Can you find your hero in the superhero_info data? Show their info!  

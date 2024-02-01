@@ -158,6 +158,7 @@ names(good_guys)
 good_guys %>%
   filter(hair_color == "Green")
 ```
+
 ```{r}
 bad_guys %>% 
   filter(hair_color == "Green")
@@ -217,7 +218,8 @@ names(superhero_powers)
 
 ```{r}
 superhero_powers %>%
-  filter(hero_names == "Deadpool")
+  filter(hero_names == "Deadpool") %>% 
+  select_if(all)
 ```
 
 15. Can you find your hero in the superhero_info data? Show their info!  
