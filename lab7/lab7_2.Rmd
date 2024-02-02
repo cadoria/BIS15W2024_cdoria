@@ -94,6 +94,7 @@ Although these summary functions are super helpful, oftentimes we are mostly int
 penguins %>% 
   count(island, sort = T) #sort=T sorts the column in descending order
 ```
+
 ```{r}
 penguins %>% 
   count(island) #whats the difference?
