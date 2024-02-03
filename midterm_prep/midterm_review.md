@@ -1,0 +1,797 @@
+---
+title: "midterm_prep"
+output: 
+  html_document: 
+    keep_md: true
+date: "2024-02-03"
+---
+
+
+
+
+### Quick Commands
+
+command + alt + i = new code chunk
+command + shift + M = pipe
+
+## Reminder to knit file when done to ensure all code is running properly
+
+# Approaching a problem
+Always load the libraries before doing anything else.
+
+
+```r
+library("tidyverse")
+```
+
+```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+## ✔ purrr     1.0.2     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+```
+
+```r
+library("janitor")
+```
+
+```
+## 
+## Attaching package: 'janitor'
+## 
+## The following objects are masked from 'package:stats':
+## 
+##     chisq.test, fisher.test
+```
+
+```r
+library("skimr")
+```
+
+## Loading the data in R
+File name should be in quotes because string, if its in a folder with the file. data/ directs R where to look. When in doubt check working directory. setwd or getwd()
+
+```r
+#fish <- read_csv("data/Gaeta_etal_CLC_data.csv")
+```
+
+## Take a look at the data
+`names` gives the column names.
+
+```r
+#names()
+```
+
+
+```r
+#dim()
+#dimension
+```
+
+
+```r
+#str()
+#structure, present more information in a row
+```
+
+
+```r
+#glimpse()
+```
+]
+`head()` prints the first n rows of the data frame
+
+```r
+#head()
+```
+`tail()` prinst the last n rows of the data frame.
+
+```r
+#tail()
+```
+
+
+```r
+#levels()
+#tells how many factors you have in a variable
+```
+
+We can summarize our data frame with the`summary()` function.  
+
+```r
+#summary(fish)
+#cant give info on any info thats not numeric
+```
+
+
+`nrow()` gives the numbers of rows.
+
+```r
+#nrow(fish)
+```
+
+`ncol` gives the number of columns.
+
+```r
+#ncol(fish)
+```
+
+
+`table()` is useful when you have a limited number of categorical variables. It produces fast counts of the number of observations in a variable. We will come back to this later... 
+
+```r
+#table(fish$lakeid)
+#you have to specify bc it might be too big
+```
+
+We can also click on the `fish` data frame in the Environment tab or type View(fish).
+
+```r
+#View(fish)
+```
+
+## Accessing Data Frame Columns and Rows 
+The same methods of selecting elements in vectors and data matrices apply to data frames. We use `[]`. We have two positions where the first applies to the rows, and the second to the columns.  
+
+The first row.  
+
+```r
+#hbirds[1,]
+```
+
+The third column.  
+
+```r
+#hbirds[ ,3]
+```
+
+
+#### Different ways to appraoch sums
+Example:
+
+```r
+treatment <- 36
+control <- 38
+```
+This one saves the sum to a new object
+
+```r
+my_experiment <- sum(treatment, control)
+my_experiment
+```
+
+```
+## [1] 74
+```
+OR
+This onejust prints out the sum, it is not saved anywhere
+
+```r
+treatment+control
+```
+
+```
+## [1] 74
+```
+
+### Logistics
+
+#### Types of Data
+There are five frequently used `classes` of data: 1. numeric, 2. integer, 3. character, 4. logical, 5. complex.
+
+```r
+my_numeric <- 42
+my_integer <- 2L #adding an L automatically denotes an integer
+my_character <- "universe"
+my_logical <- FALSE
+my_complex <- 2+4i
+#some classes of data wont work with all functions
+```
+
+To find out what type of data you are working with, use the `class()` function. This is important because sometimes we will need to change the type of data to perform certain analyses.
+
+```r
+class(my_numeric)
+```
+
+```
+## [1] "numeric"
+```
+
+```r
+class(my_integer)
+```
+
+```
+## [1] "integer"
+```
+
+Changing the class of the data
+
+```r
+my_integer <- 
+  as.integer(my_numeric) #create a new object specified as an integer
+```
+
+Ways to check for NAs in data sets
+
+```r
+#anyNA(my_missing)
+#OR
+#is.na(my_missing)
+```
+
+Removing any NAs in data sets to calculate things from the object
+
+```r
+new_vector <- c(7, 6.2, 5, 9, NA, 4, 9.8, 7, 3, 2)
+mean(new_vector, na.rm=T) #na.rm removes the NA values in the vector
+```
+
+```
+## [1] 5.888889
+```
+
+#### Vectors
+
+Vectors are a common way of organizing data in R.  We create vectors using the `c` command. The `c` stands for concatenate. 
+
+A numeric vector.
+
+```r
+my_vector <- c(10, 20, 30)
+```
+
+A character vector. Characters always have quotes and may be referred to as "strings".
+
+```r
+days_of_the_week <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+```
+
+We can use `[]` to pull out elements in a vector. We just need to specify their position in the vector; i.e. day 4 is Thursday.
+
+```r
+days_of_the_week[4]
+```
+
+```
+## [1] "Thursday"
+```
+#### Data Matrices
+Data matrices are a series of stacked vectors, similar to a data table.
+Example from class:
+
+```r
+spring_1 <- c(36.25, 35.40, 35.30)
+spring_2 <- c(35.15, 35.35, 33.35)
+spring_3 <- c(30.70, 29.65, 29.20)
+spring_4 <- c(39.70, 40.05, 38.65)
+spring_5 <- c(31.85, 31.40, 29.30)
+spring_6 <- c(30.20, 30.65, 29.75)
+spring_7 <- c(32.90, 32.50, 32.80)
+spring_8 <- c(36.80, 36.45, 33.15)
+```
+
+Build a data matrix that has the springs as rows and the columns as scientists.  
+
+
+```r
+all_springs <- c(spring_1, spring_2, spring_3, spring_4, spring_5, spring_6, spring_7, spring_8)
+all_springs
+```
+
+```
+##  [1] 36.25 35.40 35.30 35.15 35.35 33.35 30.70 29.65 29.20 39.70 40.05 38.65
+## [13] 31.85 31.40 29.30 30.20 30.65 29.75 32.90 32.50 32.80 36.80 36.45 33.15
+```
+
+
+```r
+spring_matrix <- matrix(all_springs, nrow = 8, byrow = T)
+spring_matrix
+```
+
+```
+##       [,1]  [,2]  [,3]
+## [1,] 36.25 35.40 35.30
+## [2,] 35.15 35.35 33.35
+## [3,] 30.70 29.65 29.20
+## [4,] 39.70 40.05 38.65
+## [5,] 31.85 31.40 29.30
+## [6,] 30.20 30.65 29.75
+## [7,] 32.90 32.50 32.80
+## [8,] 36.80 36.45 33.15
+```
+
+
+```r
+scientists <- c("Jill", "Steve", "Susan")
+scientists
+```
+
+```
+## [1] "Jill"  "Steve" "Susan"
+```
+
+
+```r
+locations <- c("spring_1", "spring_2", "spring_3", "spring_4", "spring_5", "spring_6", "spring_7", "spring_8")
+locations
+```
+
+```
+## [1] "spring_1" "spring_2" "spring_3" "spring_4" "spring_5" "spring_6" "spring_7"
+## [8] "spring_8"
+```
+
+
+```r
+colnames(spring_matrix) <- scientists
+```
+
+
+```r
+rownames(spring_matrix) <- locations
+```
+
+The names of the springs are 1.Bluebell Spring, 2.Opal Spring, 3.Riverside Spring, 4.Too Hot Spring, 5.Mystery Spring, 6.Emerald Spring, 7.Black Spring, 8.Pearl Spring. Name the rows and columns in the data matrix. Start by making two new vectors with the names, then use `colnames()` and `rownames()` to name the columns and rows.
+
+
+```r
+loc_names <- c("Bluebell Spring", "Opal Spring", "Riverside Spring", "Too Hot Spring", "Mystery Spring", "Emerald Spring", "Black Spring", "Pearl Spring")
+```
+
+
+
+```r
+rownames(spring_matrix) <- loc_names
+spring_matrix
+```
+
+```
+##                   Jill Steve Susan
+## Bluebell Spring  36.25 35.40 35.30
+## Opal Spring      35.15 35.35 33.35
+## Riverside Spring 30.70 29.65 29.20
+## Too Hot Spring   39.70 40.05 38.65
+## Mystery Spring   31.85 31.40 29.30
+## Emerald Spring   30.20 30.65 29.75
+## Black Spring     32.90 32.50 32.80
+## Pearl Spring     36.80 36.45 33.15
+```
+
+6. Calculate the mean temperature of all eight springs.
+
+
+```r
+mean_temperatures <- rowMeans(spring_matrix)
+mean_temperatures
+```
+
+```
+##  Bluebell Spring      Opal Spring Riverside Spring   Too Hot Spring 
+##         35.65000         34.61667         29.85000         39.46667 
+##   Mystery Spring   Emerald Spring     Black Spring     Pearl Spring 
+##         30.85000         30.20000         32.73333         35.46667
+```
+
+Add this as a new column in the data matrix.  
+Cbind is used to add a new column to a data matrix, rbind adds a new row to the data matrix. 
+
+
+```r
+all_springs_matrix <- cbind(spring_matrix, mean_temperatures)
+all_springs_matrix
+```
+
+```
+##                   Jill Steve Susan mean_temperatures
+## Bluebell Spring  36.25 35.40 35.30          35.65000
+## Opal Spring      35.15 35.35 33.35          34.61667
+## Riverside Spring 30.70 29.65 29.20          29.85000
+## Too Hot Spring   39.70 40.05 38.65          39.46667
+## Mystery Spring   31.85 31.40 29.30          30.85000
+## Emerald Spring   30.20 30.65 29.75          30.20000
+## Black Spring     32.90 32.50 32.80          32.73333
+## Pearl Spring     36.80 36.45 33.15          35.46667
+```
+
+8. Show Susan's value for Opal Spring only.
+
+
+
+```r
+spring_matrix[2,3]
+```
+
+```
+## [1] 33.35
+```
+
+9. Calculate the mean for Jill's column only.  
+
+
+```r
+jill_mean <- spring_matrix[ ,1]
+mean(jill_mean)
+```
+
+```
+## [1] 34.19375
+```
+
+
+
+#### Example of creating a data matrix
+
+
+##### 1. Plant Height Vector.
+
+```r
+plant_height <- c(30.7, 37.6, 28.4, NA, 33.2)
+```
+
+##### 2. Plant Weight Vector.
+
+```r
+plant_weight <- c(4, 5.2, 3.7, NA, 4.6)
+```
+
+##### 3. Labels for data matrix.
+
+```r
+samples <- c("plant1", "plant2", "plant3", "plant4", "plant5")
+measured <- c("height", "weight")
+```
+
+##### 4. Combine data for height and weight.
+
+```r
+plant_experiment <- c(plant_height, plant_weight)
+```
+
+##### 5. Build the data matrix.
+
+```r
+plant_experiment_matrix <- matrix(plant_experiment, nrow = 5, byrow = F)
+```
+
+##### 6. Name the columns and rows.
+
+```r
+colnames(plant_experiment_matrix) <- measured
+rownames(plant_experiment_matrix) <- samples
+```
+
+##### 7. Calculate the means of each column.
+
+```r
+plant_means <- colMeans(plant_experiment_matrix, na.rm=T)
+```
+
+##### 8. Add this as a new row.
+
+```r
+plant_experiment_matrix_final <- rbind(plant_experiment_matrix, plant_means)
+```
+
+##### 9. Print the matrix.
+
+```r
+plant_experiment_matrix_final
+```
+
+```
+##             height weight
+## plant1      30.700  4.000
+## plant2      37.600  5.200
+## plant3      28.400  3.700
+## plant4          NA     NA
+## plant5      33.200  4.600
+## plant_means 32.475  4.375
+```
+
+#### Data Frames
+Organize the vectors into a new type of data structure called a **data frame**. The data frame is the most common way to organize data within R. You can think of a data frame as similar to a spreadsheet. A data frame can store data of many different classes.
+
+
+####Writing Data to File
+We should save our hbirds data frame so we can use it again later! There are many ways to save data in R, here we write our data frame to a csv file. We use `row.names = FALSE` to avoid row numbers from printing out. 
+
+```r
+#write.csv(hbirds, "hbirds_data.csv", row.names = FALSE)
+```
+
+#Usage of tidyverse package
+
+## dplyr
+The first package that we will use that is part of the tidyverse is `dplyr`. `dplyr` is used to transform data frames by extracting, rearranging, and summarizing data such that they are focused on a question of interest. This is very helpful,  especially when wrangling large data, and makes dplyr one of most frequently used packages in the tidyverse. The two functions we will use most are `select()` and `filter()`.  
+#### Filter
+Filter is a way of pulling out observations that meet specific criteria in a variable. We will work a lot more with this in the next lab.  
+
+```r
+#little_fish <- filter(fish, length<=100)
+#little_fish
+```
+
+## `filter()`
+Unlike `select()`, `filter()` allows us to extract data that meet specific criteria within a variable. Let's say that we are interested only in the fish that occur in lake "AL". We can use `filter()` to extract these observations.  
+
+```r
+#filter(fish, lakeid == "AL")
+```
+
+Similarly, if we are only interested in fish with a length greater than or equal to 350 we can use `filter()` to extract these observations.  
+
+```r
+#filter(fish, length >= 350)
+```
+
+Using the `!` operator allows for the exclusion of specific observations.
+
+```r
+#not_AL <- filter(fish, lakeid != "AL")
+#pulls out all the fish that are not
+```
+
+## Using `filter()` with multiple observations  
+Filtering multiple values within the same variable requires the `%in%` [operator](https://www.tutorialspoint.com/r/r_operators.htm).    
+
+```r
+#filter(fish, length %in% c(167, 175))
+#pulls out within the variable length all of the fish taht have a length of 167 or 175
+```
+
+Alternatively, you can use `between` if you are looking for a range of specific values.  
+
+```r
+#filter(fish, between(scalelength, 2.5, 2.55))
+```
+
+You can also extract observations "near" a certain value but you need to specify a tolerance.  
+
+```r
+#filter(fish, near(radii_length_mm, 2, tol = 0.2))
+```
+
+#### Select
+
+```r
+#select(fish, contains("length"))
+#pulls out any relevant data that contains "length" in it
+```
+
+Options to select columns based on a specific criteria include:  
+1. ends_with() = Select columns that end with a character string  
+2. contains() = Select columns that contain a character string  
+3. matches() = Select columns that match a regular expression  
+# regular expression , or reg ex
+4. one_of() = Select columns names that are from a group of names
+
+
+```r
+#select_if(fish, is.numeric)
+#based on a a class of data
+```
+
+To select all columns that are *not* a class of data, you need to add a `~`.
+
+```r
+#select_if(fish, ~!is.numeric(.))
+#things that are not numeric. looks at fish data frame, will look at all of the cells/, ! means not
+```
+
+## Other
+Here are two examples of code that are super helpful to have in your bag of tricks.  
+
+Imported data frames often have a mix of lower and uppercase column names. Use `toupper()` or `tolower()` to fix this issue. I always try to use lowercase to keep things consistent.  
+
+```r
+#select_all(mammal_life, tolower)
+```
+
+
+```r
+#library(janitor)
+#names(mammal_life)
+```
+
+
+```r
+#clean_names(mammal_life)
+```
+
+
+
+
+** The variable `taxon` identifies the common name groups of the species represented in `homerange`. Make a table the shows the counts for each of these `taxon`.**  
+
+count(homerange, taxon)
+
+**Example using pipes and filters. 
+The species in `homerange` are also classified into trophic guilds. How many species are represented in each trophic guild.** 
+There are 13 species repsresented. 7 species are carnivores, and 6 are herbivores. In the carnivores there are 342 and 227 in the herbivores. 
+
+
+```r
+#filtered_species <- homerange %>%
+ # filter(trophic.guild %in% c("carnivore", "herbivore")) %>%
+  #count(trophic.guild)
+#filtered_species
+```
+
+
+** Make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.**  
+
+```r
+#only_carnivores <- filter(homerange, trophic.guild =="carnivore")
+#only_carnivores
+```
+
+
+#### Calculate the mean length from lake BO
+
+```r
+#mean(only_bo$length)
+```
+
+#### From the `mammals` data, build a data frame that compares `mass`, `gestation`, and `newborn` among the primate genera `Lophocebus`, `Erythrocebus`, and `Macaca`. Among these genera, which species has the smallest `newborn` mass?
+
+```r
+#mammals_subset <- select(mammals, "order", "genus", "mass", "gestation", "newborn")
+#final_mammals <- filter(mammals_subset, order == "Primates")
+#final_mammals
+```
+
+
+```r
+#filter(final_mammals, genus %in% c("Lophocebus", "Erythrocebus", "Macaca"))
+```
+
+*At the end of this exercise, you will be able to:*    
+1. Use pipes to connect functions in dplyr.  
+2. Use `arrange()` to order dplyr outputs.  
+3. Use `mutate()` to add columns in a dataframe.  
+4. Use `mutate()` and `if_else()` to replace values in a dataframe.
+
+
+
+1. We are interested in the fish from the lakes "AL" and "AR" with a radii length between 2 and 4. Extract this information from the `fish` data. Use pipes!  
+
+```r
+#fish %>% #works with fish data
+ # select(lakeid, radii_length_mm) %>% #pull out variables out interest
+#  filter(lakeid=="AL" | lakeid== "AR") %>% #only use lakes
+ # filter(between(radii_length_mm, 2, 4)) %>% #between 2 and 4
+  #arrange(desc(radii_length_mm)) #sort to make easier to read
+## desc ararnges it in descending order
+```
+
+### `mutate()`  
+Mutate allows us to create a new column from existing columns in a data frame. We are doing a small introduction here and will add some additional functions later. Let's convert the length variable from cm to millimeters and create a new variable called length_mm.  
+
+```r
+#fish %>% 
+  #mutate(length_mm = length*10) %>% 
+ # select(fish_id, length, length_mm)
+```
+
+### `mutate_all()`
+This last function is super helpful when cleaning data. With "wild" data, there are often mixed entries (upper and lowercase), blank spaces, odd characters, etc. These all need to be dealt with before analysis.  
+
+Here is an example that changes all entries to lowercase (if present).  
+
+```r
+#mammals %>%
+ # mutate_all(tolower)
+```
+
+Using the across function we can specify individual columns.
+
+```r
+#mammals %>% 
+ # mutate(across(c("order", "family"), tolower))
+```
+
+## `if_else()`
+We will briefly introduce `if_else()` here because it allows us to use `mutate()` but not have the entire column affected in the same way. In a sense, this can function like find and replace in a spreadsheet program. With `ifelse()`, you first specify a logical statement, afterwards what needs to happen if the statement returns `TRUE`, and lastly what needs to happen if it's  `FALSE`.  
+
+Have a look at the data from mammals below. Notice that the values for newborn include `-999.00`. This is sometimes used as a placeholder for NA (but, is a really bad idea). We can use `if_else()` to replace `-999.00` with `NA`.  
+
+```r
+#mammals %>% 
+ # select(genus, species, newborn) %>% 
+  #arrange(newborn)
+```
+
+
+```r
+#mammals %>% 
+ # select(genus, species, newborn) %>%
+  #mutate(newborn_new = ifelse(newborn == -999.00, NA, newborn))%>% 
+  #arrange(newborn)
+```
+
+## Comprehensive Practice using pipes, filter, select. Can also be found in lab6 folder. Spcefically, the lab 6 warmup and 6_2 homework. 
+
+#### Load the Libraries
+
+
+#### Load the bison data
+
+```r
+#bison <- read_csv("data/bison.csv")
+```
+#### What are the dimensions and structure of the data?
+
+```r
+#dim(bison)
+```
+
+
+```r
+#glimpse(bison)
+```
+
+#### We are only interested in code, sex, weight, year of birth
+
+```r
+#names(bison)
+```
+
+#### Restrict tthe data to these variables and store as a new object
+
+```r
+#bison_subset <- select(bison, "data_code", "animal_sex", "animal_weight", "animal_yob")
+#bison_subset
+```
+
+```r
+#using pipes
+#bison_new <- bison %>%
+#  select(animal_code, animal_sex. animal_weight, animal_yob)
+```
+
+#### Pull out the animals born between 1980-1990
+
+```r
+#bison_year <- filter(bison_subset, animal_yob <= 1990 & animal_yob >= 1980)
+#bison_year
+#could also use between
+```
+
+
+#### How many male and female bison are represented between 1980-1990?
+There are 21 male bison represented and 414 female bison represented. 
+
+```r
+#male_bison <- filter(bison_year, animal_sex == "M")
+#male_bison
+```
+
+
+```r
+#female_bison <- filter(bison_year, animal_sex == "F")
+#female_bison
+```
+
+#### Between 1980-1990, were males or females larger on average?
+
+On average it appears that the male bison were larger. 
+
+```r
+#mean(male_bison$animal_weight)
+```
+
+
+```r
+#mean(female_bison$animal_weight)
+```
+
+

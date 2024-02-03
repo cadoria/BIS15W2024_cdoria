@@ -95,11 +95,6 @@ penguins %>%
   count(island, sort = T) #sort=T sorts the column in descending order
 ```
 
-```{r}
-penguins %>% 
-  count(island) #whats the difference?
-```
-
 Compare this with `summarize()` and `group_by()`.
 ```{r}
 penguins %>% 
