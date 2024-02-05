@@ -34,13 +34,17 @@ fisheries <- readr::read_csv(file = "data/FAO_1950to2012_111914.csv")
 1. Do an exploratory analysis of the data (your choice). What are the names of the variables, what are the dimensions, are there any NA's, what are the classes of the variables?  
 ```{r}
 dim(fisheries)
+
 ```
+
 ```{r}
 names(fisheries)
 ```
+
 ```{r}
 class(fisheries)
 ```
+
 ```{r}
 any(is.na(fisheries))
 ```
@@ -123,22 +127,28 @@ fisheries_tidy %>%
 ```
 
 8. Which five countries caught the most cephalopods between 2008-2012?
-India, China, Italy, Spain, and Algeria. 
+Indonesia, China, Chile, USA, Japan.
+
+```{r}
+names(fisheries_tidy)
+```
+
+
 ```{r}
 fisheries_tidy %>%
-  filter(asfis_species_name == "Cephalopoda" & between(year, 2008, 2012)) %>% 
-  group_by(country) %>% 
-  summarise(max_cephalopods = max(catch, na.rm = T)) %>% 
-  arrange(desc(max_cephalopods))
+  select(country, isscaap_taxonomic_group, year, catch) %>% 
+  filter(isscaap_taxonomic_group == "Squids, cuttlefishes, octopuses") %>% 
+  filter(between(year, 2008, 2012)) %>% 
+  arrange(desc(catch))
 ```
 
 9. Which species had the highest catch total between 2008-2012? (hint: Osteichthyes is not a species)
-Marine fishes nei had the highest catch total between 2008 and 2012.
+Theragra chalcogramma had the highest catch total between 2008 and 2012.
 ```{r}
 fisheries_tidy %>%
-  filter(between(year, 2008, 2012)) %>% 
-  group_by(common_name) %>% 
-  summarise(max_species_catch = max(catch, na.rm = T)) %>% 
+  filter(asfis_species_name != "Osteichthyes", between(year, 2008, 2012)) %>% 
+  group_by(asfis_species_name) %>% 
+  summarise(max_species_catch = sum(catch, na.rm = T)) %>% 
   arrange(desc(max_species_catch))
 ```
 

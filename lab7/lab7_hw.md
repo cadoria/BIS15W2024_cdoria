@@ -1,7 +1,7 @@
 ---
 title: "Lab 7 Homework"
 author: "Carmen Doria"
-date: "2024-02-01"
+date: "2024-02-04"
 output:
   html_document: 
     theme: spacelab
@@ -52,6 +52,7 @@ dim(fisheries)
 ## [1] 17692    71
 ```
 
+
 ```r
 names(fisheries)
 ```
@@ -95,6 +96,7 @@ names(fisheries)
 ## [71] "2012"
 ```
 
+
 ```r
 class(fisheries)
 ```
@@ -102,6 +104,7 @@ class(fisheries)
 ```
 ## [1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame"
 ```
+
 
 ```r
 any(is.na(fisheries))
@@ -346,100 +349,74 @@ fisheries_tidy %>%
 ```
 
 8. Which five countries caught the most cephalopods between 2008-2012?
-India, China, Italy, Spain, and Algeria. 
+Indonesia, China, Chile, USA, Japan. 
+
+
+```r
+names(fisheries_tidy)
+```
+
+```
+##  [1] "country"                 "common_name"            
+##  [3] "isscaap_group_number"    "isscaap_taxonomic_group"
+##  [5] "asfis_species_number"    "asfis_species_name"     
+##  [7] "fao_major_fishing_area"  "measure"                
+##  [9] "year"                    "catch"
+```
+
+
 
 ```r
 fisheries_tidy %>%
-  filter(asfis_species_name == "Cephalopoda" & between(year, 2008, 2012)) %>% 
-  group_by(country) %>% 
-  summarise(max_cephalopods = max(catch, na.rm = T)) %>% 
-  arrange(desc(max_cephalopods))
+  select(country, isscaap_taxonomic_group, year, catch) %>% 
+  filter(isscaap_taxonomic_group == "Squids, cuttlefishes, octopuses") %>% 
+  filter(between(year, 2008, 2012)) %>% 
+  arrange(desc(catch))
 ```
 
 ```
-## Warning in grepl(",", levels(x), fixed = TRUE): input string 1 is invalid UTF-8
-```
-
-```
-## Warning in grepl(",", levels(x), fixed = TRUE): input string 2 is invalid UTF-8
-```
-
-```
-## Warning in grepl(",", levels(x), fixed = TRUE): input string 3 is invalid UTF-8
-```
-
-```
-## Warning in grepl(",", levels(x), fixed = TRUE): input string 4 is invalid UTF-8
-```
-
-```
-## Warning: There were 2 warnings in `summarise()`.
-## The first warning was:
-## ℹ In argument: `max_cephalopods = max(catch, na.rm = T)`.
-## ℹ In group 7: `country = "Israel"`.
-## Caused by warning in `max()`:
-## ! no non-missing arguments to max; returning -Inf
-## ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.
-```
-
-```
-## # A tibble: 16 × 2
-##    country                  max_cephalopods
-##    <fct>                              <dbl>
-##  1 India                                 94
-##  2 China                                 86
-##  3 Italy                                 66
-##  4 Spain                                 57
-##  5 Algeria                               54
-##  6 Mauritania                            44
-##  7 France                                39
-##  8 TimorLeste                            16
-##  9 Taiwan Province of China              11
-## 10 Mozambique                             8
-## 11 Cambodia                               6
-## 12 Madagascar                             6
-## 13 Croatia                                4
-## 14 Viet Nam                               0
-## 15 Israel                              -Inf
-## 16 Somalia                             -Inf
+## # A tibble: 1,801 × 4
+##    country                  isscaap_taxonomic_group          year catch
+##    <fct>                    <chr>                           <dbl> <dbl>
+##  1 Indonesia                Squids, cuttlefishes, octopuses  2012   991
+##  2 China                    Squids, cuttlefishes, octopuses  2008   981
+##  3 Chile                    Squids, cuttlefishes, octopuses  2012   965
+##  4 United States of America Squids, cuttlefishes, octopuses  2010   901
+##  5 China                    Squids, cuttlefishes, octopuses  2012   845
+##  6 Japan                    Squids, cuttlefishes, octopuses  2010   832
+##  7 China                    Squids, cuttlefishes, octopuses  2010   826
+##  8 Peru                     Squids, cuttlefishes, octopuses  2010   822
+##  9 Korea, Republic of       Squids, cuttlefishes, octopuses  2008   816
+## 10 Peru                     Squids, cuttlefishes, octopuses  2009   805
+## # ℹ 1,791 more rows
 ```
 
 9. Which species had the highest catch total between 2008-2012? (hint: Osteichthyes is not a species)
-Marine fishes nei had the highest catch total between 2008 and 2012.
+Theragra chalcogramma had the highest catch total between 2008 and 2012.
 
 ```r
 fisheries_tidy %>%
-  filter(between(year, 2008, 2012)) %>% 
-  group_by(common_name) %>% 
-  summarise(max_species_catch = max(catch, na.rm = T)) %>% 
+  filter(asfis_species_name != "Osteichthyes", between(year, 2008, 2012)) %>% 
+  group_by(asfis_species_name) %>% 
+  summarise(max_species_catch = sum(catch, na.rm = T)) %>% 
   arrange(desc(max_species_catch))
 ```
 
 ```
-## Warning: There were 119 warnings in `summarise()`.
-## The first warning was:
-## ℹ In argument: `max_species_catch = max(catch, na.rm = T)`.
-## ℹ In group 37: `common_name = "Angulate volute"`.
-## Caused by warning in `max()`:
-## ! no non-missing arguments to max; returning -Inf
-## ℹ Run `dplyr::last_dplyr_warnings()` to see the 118 remaining warnings.
-```
-
-```
-## # A tibble: 1,477 × 2
-##    common_name                    max_species_catch
-##    <chr>                                      <dbl>
-##  1 Marine fishes nei                           9806
-##  2 Largehead hairtail                          8221
-##  3 Alaska pollock(=Walleye poll.)              8188
-##  4 Anchoveta(=Peruvian anchovy)                7981
-##  5 Atlantic herring                            7873
-##  6 Skipjack tuna                                997
-##  7 Blue whiting(=Poutassou)                     996
-##  8 Scads nei                                    994
-##  9 Yellowstripe scad                            993
-## 10 Common squids nei                            991
-## # ℹ 1,467 more rows
+## # A tibble: 1,471 × 2
+##    asfis_species_name    max_species_catch
+##    <chr>                             <dbl>
+##  1 Theragra chalcogramma             41075
+##  2 Engraulis ringens                 35523
+##  3 Katsuwonus pelamis                32153
+##  4 Trichiurus lepturus               30400
+##  5 Clupea harengus                   28527
+##  6 Thunnus albacares                 20119
+##  7 Scomber japonicus                 14723
+##  8 Gadus morhua                      13253
+##  9 Thunnus alalunga                  12019
+## 10 Natantia                          11984
+## # ℹ 1,461 more rows
 ```
 
 10. Use the data to do at least one analysis of your choice.
