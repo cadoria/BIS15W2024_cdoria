@@ -349,7 +349,7 @@ fisheries_tidy %>%
 ```
 
 8. Which five countries caught the most cephalopods between 2008-2012?
-Indonesia, China, Chile, USA, Japan. 
+India, China, Spain, ALgeria and France
 
 
 ```r
@@ -367,28 +367,34 @@ names(fisheries_tidy)
 
 
 ```r
-fisheries_tidy %>%
-  select(country, isscaap_taxonomic_group, year, catch) %>% 
-  filter(isscaap_taxonomic_group == "Squids, cuttlefishes, octopuses") %>% 
-  filter(between(year, 2008, 2012)) %>% 
-  arrange(desc(catch))
+fisheries_tidy %>% 
+  filter(between(year,2008,2012)) %>% 
+  filter(common_name == "Cephalopods nei") %>% 
+  group_by(country) %>% 
+  summarize(sum_catch=sum(catch,na.rm=T)) %>% 
+  arrange(desc(sum_catch))
 ```
 
 ```
-## # A tibble: 1,801 × 4
-##    country                  isscaap_taxonomic_group          year catch
-##    <fct>                    <chr>                           <dbl> <dbl>
-##  1 Indonesia                Squids, cuttlefishes, octopuses  2012   991
-##  2 China                    Squids, cuttlefishes, octopuses  2008   981
-##  3 Chile                    Squids, cuttlefishes, octopuses  2012   965
-##  4 United States of America Squids, cuttlefishes, octopuses  2010   901
-##  5 China                    Squids, cuttlefishes, octopuses  2012   845
-##  6 Japan                    Squids, cuttlefishes, octopuses  2010   832
-##  7 China                    Squids, cuttlefishes, octopuses  2010   826
-##  8 Peru                     Squids, cuttlefishes, octopuses  2010   822
-##  9 Korea, Republic of       Squids, cuttlefishes, octopuses  2008   816
-## 10 Peru                     Squids, cuttlefishes, octopuses  2009   805
-## # ℹ 1,791 more rows
+## # A tibble: 16 × 2
+##    country                  sum_catch
+##    <fct>                        <dbl>
+##  1 India                          570
+##  2 China                          257
+##  3 Spain                          198
+##  4 Algeria                        162
+##  5 France                         101
+##  6 Mauritania                      90
+##  7 TimorLeste                      76
+##  8 Italy                           66
+##  9 Mozambique                      16
+## 10 Cambodia                        15
+## 11 Taiwan Province of China        13
+## 12 Madagascar                      11
+## 13 Croatia                          7
+## 14 Israel                           0
+## 15 Somalia                          0
+## 16 Viet Nam                         0
 ```
 
 9. Which species had the highest catch total between 2008-2012? (hint: Osteichthyes is not a species)
