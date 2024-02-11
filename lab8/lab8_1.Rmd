@@ -92,6 +92,8 @@ penguins %>%
   group_by(island) %>% 
   summarise(na = sum(is.na(sex)))
 ```
+
+
 ```{r}
 names(penguins)
 ```
