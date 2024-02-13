@@ -1,7 +1,7 @@
 ---
 title: "Homework 7"
-author: "Your Name Here"
-date: "2024-02-10"
+author: Carmen Doria
+date: "2024-02-12"
 output:
   html_document: 
     theme: spacelab
@@ -79,6 +79,9 @@ dim(amniota)
 ## [1] 21322    36
 ```
 
+
+
+
 ```r
 glimpse(amniota)
 ```
@@ -133,6 +136,8 @@ dim(amphibio)
 ```
 ## [1] 6776   38
 ```
+
+
 
 ```r
 str(amphibio)
@@ -244,6 +249,8 @@ amniota %>%
 ## #   female_body_mass_g <int>, male_body_mass_g <int>, …
 ```
 
+
+
 ```r
 amphibio %>% 
   summarise_all(~sum(is.na(.)))
@@ -269,33 +276,7 @@ amphibio %>%
 
 ```r
 amniota_tidy <- amniota %>% 
-  replace_with_na(replace = list(litters_or_clutches_per_y = -999, 
-                                 no_sex_maturity_d = -999, 
-                                 no_sex_svl_cm = -999, 
-                                 female_body_mass_at_maturity_g= -999, 
-                                 birth_or_hatching_svl_cm= -999, 
-                                 female_svl_cm = -999, 
-                                 male_svl_cm= -999, 
-                                 adult_svl_cm= -999,
-                                fledging_mass_g = -999, 
-                                 egg_length_mm = -999, 
-                                 egg_width_mm  = -999, 
-                                 no_sex_body_mass_g = -999, 
-                                 inter_litter_or_interbirth_interval_y = -999, 
-                                  male_maturity_d= -999, 
-                                 longevity_y = -999, 
-                                 fledging_age_d= -999,
-                                  incubation_d = -999, 
-                                 egg_mass_g = -999, 
-                                 weaning_weight_g = -999, 
-                                birth_or_hatching_weight_g  = -999, 
-                                weaning_d= -999, 
-                                gestation_d= -999, 
-                                 maximum_longevity_y = -999, 
-                                litter_or_clutch_size_n = -999,
-                                subspecies = -999,
-                                female_maturity_d= -999)) %>% 
-miss_var_summary()
+  replace_with_na_all(condition = ~.x == -999)
 ```
 
 
@@ -306,12 +287,20 @@ naniar::miss_var_summary(amniota_tidy)
 ```
 
 ```
-## # A tibble: 3 × 3
-##   variable n_miss pct_miss
-##   <chr>     <int>    <dbl>
-## 1 variable      0        0
-## 2 n_miss        0        0
-## 3 pct_miss      0        0
+## # A tibble: 36 × 3
+##    variable                       n_miss pct_miss
+##    <chr>                           <int>    <dbl>
+##  1 subspecies                      21322    100  
+##  2 female_body_mass_at_maturity_g  21318    100. 
+##  3 female_svl_at_maturity_cm       21120     99.1
+##  4 fledging_mass_g                 21111     99.0
+##  5 male_svl_cm                     21040     98.7
+##  6 no_sex_maturity_d               20860     97.8
+##  7 egg_width_mm                    20727     97.2
+##  8 egg_length_mm                   20702     97.1
+##  9 weaning_weight_g                20258     95.0
+## 10 female_svl_cm                   20242     94.9
+## # ℹ 26 more rows
 ```
 
 **7. Use the package `naniar` to produce a summary, including percentages, of missing data in each column for the `amphibio` data.**
@@ -343,7 +332,7 @@ naniar::miss_var_summary(amphibio)
 
 
 ```r
-amniota_egg_mass <- amniota %>% 
+amniota_egg_mass <- amniota_tidy %>% 
   select(class, egg_mass_g) %>% 
   group_by(class) %>% 
   summarise_all(~sum(is.na(.)))
