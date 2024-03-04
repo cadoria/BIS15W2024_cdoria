@@ -24,10 +24,6 @@ library(janitor)
 library(ggmap)
 ``` 
 
-## API key
-```{r}
-register_stadiamaps("aff428bd-8ad7-4b69-8b6b-b34301483ba9", write = FALSE)
-```
 
 ## Load the Data
 We will use two separate data sets for this homework.  
