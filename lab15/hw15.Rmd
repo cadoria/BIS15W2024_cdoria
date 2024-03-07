@@ -1,6 +1,6 @@
 ---
 title: "BIS15L_AI_hmwk"
-author: "Your Name"
+author: Carmen Doria
 date: "`r Sys.Date()`"
 output: html_document
 ---
@@ -23,25 +23,24 @@ library(janitor)
 library(dplyr)
 ```
 
-
 1.
 ```{r}
-blood_count <- read_csv("data/blood_count.csv")
+blood_count <- read_csv("data/blood_count_dataset.csv") %>% clean_names()
 ```
 
 2. 
 ```{r}
-glmpse(blood_count)
+glimpse(blood_count)
 
 ```
 
 3. 
 ```{r}
-blood_count %>% 
-  group_by(gender) %>% 
-  summarize(min=min(red_blood_cells)
-            mean=maen(red_blood_cells),
-            max=max(red_blood_cells)
+blood_count %>%
+  group_by(gender) %>%
+  summarize(min = min(red_blood_cells),
+            mean = mean(red_blood_cells),
+            max = max(red_blood_cells))
 ```
 
 
@@ -50,44 +49,44 @@ blood_count %>%
 options(scipen = 999, digits = 2)
 
 blood_count %>% 
-  filter(Gender = "male") %>%
-  select[3:9] %>%
+  filter(gender == "male") %>%
+  select(3:9) %>%
   colMeans(na.rm = TRUE)
 
 ```
 
 5. 
 ```{r}
-bloood_count %>% 
-  filter(Gender = "Female") />%
-  select[3:9] %>%
+blood_count %>% 
+  filter(gender == "Female") %>% 
+  select(3:9) %>%
   colMeans(na.rm = T)
 ```
 
 
 6. 
 ```{r}
-
 blood_count %>%
-  pivot_wider(cols = [3:9], names_to = "Test", values_to = "Values") %>%
-  ggplot(aes(x = Gender, y = Values, fill = Gender)) +
+  drop_na() %>%
+  pivot_longer(cols = -c(age, gender), names_to = "Test", values_to = "Values") %>%
+  ggplot(aes(x = gender, y = Values, fill = gender)) +
   geom_boxplot() +
-  facet(~ Test, scales = "free") 
+  facet_wrap(~ Test, scales = "free") +
   labs(title = "Boxplot of Blood Count Tests",
-       x = "Test",
+       x = "Gender",
        y = "Values")
-
 ```
 
 7. 
 ```{r}
 grouped_bc <- blood_count %>%
-  change(Age_Group = case_when(
-    Age >= 20 & Age <= 29 ~ "20s",
-    Age >= 30 & Age <= 39 ~ "30s",
-    Age >= 40 & Age <= 49 ~ "40s",
-    Age >= 50 & Age <= 59 ~ "50s",
-    Age >= 60 & Age <= 70 ~ "60s")) # there were only 4 people in 70s, so I combined it with 60s
+  mutate(Age_Group = case_when(
+    age >= 20 & age <= 29 ~ "20s",
+    age >= 30 & age <= 39 ~ "30s",
+    age >= 40 & age <= 49 ~ "40s",
+    age >= 50 & age <= 59 ~ "50s",
+    age >= 60 ~ "60s" # Including 70s as part of 60s
+  ))
 
 head(grouped_bc)
 
@@ -95,19 +94,25 @@ head(grouped_bc)
 
 8. 
 ```{r}
-blood_count %>%
+grouped_bc %>%
   pivot_longer(cols = 3:9, names_to = "Test", values_to = "Values") %>%
-  ggplot(ase(x = Age_Group, y = values, fill = Age_Group)) +
+  ggplot(aes(x = Age_Group, y = Values, fill = Age_Group)) +
   geom_boxplot() +
-  facet_wrap( Test, scales = "free") +  # Facet by the "Test" variable
+  facet_wrap(~ Test, scales = "free") +  # Facet by the "Test" variable
   labs(title = "Boxplot of Blood Count Tests by Age Group",
        x = "Age Group",
        y = "Values")
 
 ```
 9. What are two drawbacks and two benefits of AI?
-
+Drawbacks:
+1) AI systems can inherit biases present in the data used to train them, leading to biased outcomes and unfair treatment of certain groups.
+2)While new job opportunities may emerge in AI-related fields, the transition can be challenging for displaced workers and may exacerbate economic inequality
+Benefits:
+1)AI systems can automate repetitive tasks and processes, leading to increased efficiency and productivity. This automation frees up human resources to focus on more complex and creative tasks, ultimately improving overall productivity.
+2) AI algorithms can analyze vast amounts of data quickly and accurately, enabling organizations to make data-driven decisions and predictions.
 10. Do you think you will use AI for coding in the future? Why or why not?
+Yes, although it has it drawbacks, it is extremely helpful in explaining lines of code to the user and overall troubleshooting plus it provides tips that can help improve the general understanding of whatever language you're learning.
 
 
 ## Push your final code to GitHub!
