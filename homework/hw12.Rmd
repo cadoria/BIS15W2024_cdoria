@@ -24,6 +24,9 @@ library(janitor)
 library(ggmap)
 ``` 
 
+```{r}
+
+```
 
 ## Load the Data
 We will use two separate data sets for this homework.  
